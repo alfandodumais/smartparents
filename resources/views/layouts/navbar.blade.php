@@ -27,9 +27,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('profile.edit') }}">Edit Profile</a>
+                        </li>
+                        
                     @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('dashboard') }}">My Videos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('profile.edit') }}">Edit Profile</a>
                         </li>
                         
                     @endif

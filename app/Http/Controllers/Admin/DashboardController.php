@@ -18,3 +18,4 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('videos', 'users', 'transactions'));
     }
 }
+ 

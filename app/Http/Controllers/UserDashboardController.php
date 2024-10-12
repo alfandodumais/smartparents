@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Video;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Storage;
 
 class UserDashboardController extends Controller
 {
@@ -21,7 +22,7 @@ class UserDashboardController extends Controller
 
         // Mengambil transaksi user untuk menampilkan video yang telah dibeli
         $transactions = Transaction::where('user_id', $user->id)
-            ->where('payment_status', 'success') // Hanya menampilkan transaksi sukses
+            ->where('payment_status', 'completed') // Hanya menampilkan transaksi sukses
             ->with('video') // Include relasi video
             ->get();
 
@@ -32,23 +33,33 @@ class UserDashboardController extends Controller
         ]);
     }
 
-    public function pending()
+    public function download(Video $video)
     {
-        // Mendapatkan user yang sedang login
-        $user = Auth::user();
+    $user = Auth::user();
 
-        // Mengambil transaksi user untuk menampilkan video yang telah dibeli
-        $transactions = Transaction::where('user_id', $user->id)
-            ->where('payment_status', 'pending') // Hanya menampilkan transaksi sukses
-            ->with('video') // Include relasi video
-            ->get();
+    // Pastikan user sudah membeli video ini
+    $transaction = Transaction::where('user_id', $user->id)
+        ->where('video_id', $video->id)
+        ->where('payment_status', 'completed') // Pastikan pembelian sudah selesai
+        ->first();
 
-        // Tampilkan halaman dashboard dengan daftar video yang telah dibeli
-        return view('user.pending', [
-            'transactions' => $transactions,
-            'user' => $user,
-        ]);
+    if (!$transaction) {
+        return redirect()->route('videos.index')->with('error', 'Anda belum membeli video ini.');
     }
+
+    // Path ke file video
+    $filePath = storage_path('app/public/' . $video->video_path);
+
+    // Pastikan file ada
+    if (!file_exists($filePath)) {
+        return redirect()->route('videos.index')->with('error', 'Video tidak ditemukan.');
+    }
+
+    // Kirim file ke user
+    return response()->download($filePath, $video->title . '.mp4');
+    }
+
+
 
 
     

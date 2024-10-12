@@ -32,19 +32,20 @@ Route::get('/download/{video}', [UserVideoController::class, 'download'])->name(
 Route::middleware(['auth'])->group(function () {
     Route::get('/purchase/{video}', [PaymentController::class, 'purchase'])->name('purchase');
     
-    // Profile Management
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // // Profile Management
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // User Dashboard
     Route::get('/dashboard', [UserDashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/pending', [UserDashboardController::class, 'pending'])->name('pending');
-    
+    // Rute untuk download video
+    Route::get('/download/{video}', [UserDashboardController::class, 'download'])->name('videos.download');
+
     // Payment routes for Midtrans
     Route::post('/payment/{video}', [MidtransController::class, 'createPayment'])->name('payment.create');
-    Route::post('/payment/notification', [MidtransController::class, 'handleNotification'])->name('payment.notification');
-
+    
 });
 
 // Admin-specific routes
@@ -69,5 +70,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // Share Link Access
 Route::get('/share/{token}', [ShareLinkController::class, 'access'])->name('share.link');
 
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
 // Auth Routes
 require __DIR__.'/auth.php';
+

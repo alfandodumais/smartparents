@@ -64,7 +64,7 @@ class MidtransController extends Controller
          $transaction->user_id = auth()->user()->id; // Simpan user_id
          $transaction->video_id = $request->video_id; // Simpan video_id
          $transaction->amount = $request->amount; // Simpan jumlah
-         $transaction->payment_status = 'success'; // Status awal
+         $transaction->payment_status = 'pending'; // Status awal
          $transaction->save(); // Simpan ke database
 
         return response()->json(['snap_token' => $snapToken, 'video_id' => $request->video_id]);
@@ -78,6 +78,10 @@ class MidtransController extends Controller
 
 public function paymentCallback(Request $request)
 {
+    Config::$serverKey = config('midtrans.server_key');
+    Config::$isProduction = false; // Ubah menjadi true untuk produksi
+    Config::$isSanitized = true;
+    Config::$is3ds = true;
     $data = json_decode($request->getContent(), true);
 
     // Log untuk memastikan callback diterima
@@ -98,7 +102,7 @@ public function paymentCallback(Request $request)
     switch ($data['transaction_status']) {
         case 'capture':
         case 'settlement':
-            $transaction->payment_status = 'success';
+            $transaction->payment_status = 'completed';
             break;
 
         case 'deny':

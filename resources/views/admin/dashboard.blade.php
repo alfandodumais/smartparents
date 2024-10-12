@@ -4,6 +4,44 @@
 <div class="container">
     <h1>Admin Dashboard</h1>
 
+    <!-- Dashboard Statistics -->
+    <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h4>Total Users</h4>
+                    <h2>{{ $totalUsers }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h4>Total Videos</h4>
+                    <h2>{{ $totalVideos }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h4>Total Transactions</h4>
+                    <h2>{{ $totalTransactions }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h4>Total Revenue</h4>
+                    <h2>@currency($totalRevenue)</h2>
+                </div>
+            </div>
+        </div>
+        
     <!-- Videos Section -->
     <div class="row mb-4">
         <div class="col-lg-6 col-md-12">
@@ -74,7 +112,7 @@
                         <td>{{ $transaction->user->name }}</td>
                         <td>{{ $transaction->video->title }}</td>
                         <td>@currency($transaction->amount)</td>
-                        <td>{{ ucfirst($transaction->status) }}</td>
+                        <td>{{ ucfirst($transaction->payment_status) }}</td>
                         <td>{{ $transaction->created_at->format('d M Y, H:i') }}</td>
                     </tr>
                     @endforeach
@@ -83,43 +121,7 @@
         </div>
     </div>
 
-    <!-- Dashboard Statistics -->
-    <div class="row">
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <h4>Total Users</h4>
-                    <h2>{{ $totalUsers }}</h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <h4>Total Videos</h4>
-                    <h2>{{ $totalVideos }}</h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card bg-warning text-white">
-                <div class="card-body">
-                    <h4>Total Transactions</h4>
-                    <h2>{{ $totalTransactions }}</h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card bg-danger text-white">
-                <div class="card-body">
-                    <h4>Total Revenue</h4>
-                    <h2>@currency($totalRevenue)</h2>
-                </div>
-            </div>
-        </div>
+    
     </div>
 </div>
 @endsection

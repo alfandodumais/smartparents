@@ -68,7 +68,7 @@ class VideoController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            // Hapus thumbnail lama
+            // Hapus thumbnail lama 
             Storage::disk('public')->delete($video->thumbnail);
             // Upload thumbnail baru
             $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');

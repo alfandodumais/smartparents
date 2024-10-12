@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Your Purchased Videos')
+@section('title', 'Video yang Anda Beli')
 
 @section('content')
 <div class="container">
-    <h1>Your Purchased Videos</h1>
+    <h1> Video yang {{ Auth::user()->name }} miliki</h1>
 
     @if($transactions->count() > 0)
         <div class="row">
@@ -14,16 +14,17 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $transaction->video->title }}</h5>
                             <img src="{{ asset('storage/' . $transaction->video->thumbnail) }}" class="card-img-top" alt="Thumbnail">
-                            <p class="card-text">Price: {{ $transaction->video->price == 0 ? 'Free' : 'Rp. ' . $transaction->video->price }}</p>
-                            <a href="{{ route('videos.show', $transaction->video->id) }}" class="btn btn-primary">Watch</a>
-                            {{-- <a href="{{ route('videos.download', $transaction->video->id) }}" class="btn btn-success">Download</a> --}}
+                            {{-- <p class="card-text">Price: {{ $transaction->video->price == 0 ? 'Free' : 'Rp. ' . $transaction->video->price }}</p> --}}
+                            <p></p>
+                            <a href="{{ route('videos.show', $transaction->video->id) }}" class="btn btn-primary">Tonton</a>
+                            <a href="{{ route('videos.download', $transaction->video->id) }}" class="btn btn-success">Download</a> <!-- Tombol Download -->
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
     @else
-        <p>You have not purchased any videos yet.</p>
+        <p>Anda belum membeli video apapun.</p>
     @endif
 </div>
 @endsection

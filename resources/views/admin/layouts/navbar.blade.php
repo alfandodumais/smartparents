@@ -16,6 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.transactions.index') }}">Transactions</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('profile.edit') }}">Edit Profile</a>
+                </li>
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
