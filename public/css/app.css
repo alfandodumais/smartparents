@@ -1,0 +1,23 @@
+body {
+    background-color: #ffffff;
+    color: #3C8DBC;
+}
+
+.card {
+    background-color: #1f2937;
+    border: none;
+    border-radius: 15px;
+}
+
+.btn-primary {
+    background-color: #3C8DBC;
+    border: none;
+}
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+}
